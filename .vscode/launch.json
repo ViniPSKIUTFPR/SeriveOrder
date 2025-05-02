@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-OrderSerivceManagementApplication<Order-Serivce-management>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "utfpr.arq.Order.Serivce.management.OrderSerivceManagementApplication",
+            "projectName": "Order-Serivce-management",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

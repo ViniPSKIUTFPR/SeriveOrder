@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Service Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-600 text-white py-4">
+        <div class="container mx-auto px-4">
+            <h1 class="text-2xl font-bold">Order Service Management</h1>
+        </div>
+    </header>
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Ordens de serviço</h1>
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+            <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 text-left">Número OS</th>
+                    <th class="py-3 px-6 text-left">Cliente</th>
+                    <th class="py-3 px-6 text-left">Status</th>
+                    <th class="py-3 px-6 text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-600 text-sm font-light">
+                <tr th:each="order : ${orders}" class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left" th:text="${order.id}"></td>
+                    <td class="py-3 px-6 text-left" th:text="${order.customerName}"></td>
+                    <td class="py-3 px-6 text-left">
+                        <span th:classappend="${order.status == 'Completed'} ? 'text-green-500' : 'text-yellow-500'" th:text="${order.status}"></span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                        <div class="flex item-center justify-center">
+                            <a href="#" th:href="@{/orders/edit/{id}(id=${order.id})}" class="w-4 mr-2 transform hover:text-blue-500 hover:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                    <path fill-rule="evenodd" d="M4 16a2 2 0 002 2h8a2 2 0 002-2v-3H4v3z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                            <a href="#" th:href="@{/orders/delete/{id}(id=${order.id})}" class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H3a1 1 0 100 2h14a1 1 0 100-2h-2V3a1 1 0 00-1-1H6zm2 5a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html></svg>
