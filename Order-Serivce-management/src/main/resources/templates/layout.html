@@ -1,0 +1,24 @@
+<!-- templates/layout.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Sistema OS</title>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <header class="bg-gray-600 text-white py-2">
+        <nav class="m-3">
+            <a th:href="@{/orders}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Ordens de serviço</a>
+            <a th:href="@{/ordersForm}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Nova OS</a>
+            <a th:href="@{/}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Serviços</a>
+        </nav>
+    </header>
+    <div th:replace="${contentTemplate} :: ${contentFragment}"></div>
+</body>
+<footer class="bg-gray-800 text-white py-4 mt-8">
+  <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2023 Order Service Management. Todos os direitos reservados.</p>
+  </div>
+</footer>
+</html>
