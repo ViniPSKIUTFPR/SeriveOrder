@@ -1,0 +1,41 @@
+<form th:action="@{/servicesForm}" method="post">
+    <div class="bg-white p-8 rounded shadow-md">
+        <h1 class="text-2xl font-bold mb-6 text-gray-700">Cadastro de Serviço</h1>
+
+        <input type="hidden" id="id" name="id" th:value="${servicesModel.id}">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="col-span-2">
+                <label for="name" class="block text-sm font-medium text-gray-700">Nome do Serviço</label>
+                <input type="text" id="name" name="name" th:value="${servicesModel.name}"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+            </div>
+            <div class="col-span-1">
+                <label for="price" class="block text-sm font-medium text-gray-700">Preço</label>
+                <input type="number" id="price" name="price" step="0.01" th:value="${servicesModel.price}"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="col-span-2">
+                <label for="details" class="block text-sm font-medium text-gray-700">Descrição</label>
+                <textarea id="details" name="details"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        rows="3" required th:text="${servicesModel.details}"></textarea>
+            </div>
+            <div class="col-span-1">
+                <label for="hours" class="block text-sm font-medium text-gray-700">Horas</label>
+                <input type="number" id="hours" name="hours" th:value="${servicesModel.hours}"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+            </div>
+        </div>
+
+        <div class="flex justify-end">
+            <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Salvar Serviço
+            </button>
+        </div>
+    </div>
+</form>

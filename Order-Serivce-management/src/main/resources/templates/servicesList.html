@@ -1,0 +1,37 @@
+<div th:fragment="content" class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold text-center mb-8">Lista de Serviços</h1>
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+        <thead>
+            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <th class="py-3 px-6 text-left">Nome</th>
+                <th class="py-3 px-6 text-left">Detalhes</th>
+                <th class="py-3 px-6 text-left">Preço</th>
+                <th class="py-3 px-6 text-left">Horas</th>
+                <th class="py-3 px-6 text-center">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="text-gray-600 text-sm font-light">
+            <tr th:each="service : ${servicesList}" class="border-b border-gray-200 hover:bg-gray-100">
+                <td class="py-3 px-6 text-left" th:text="${service.name}"></td>
+                <td class="py-3 px-6 text-left" th:text="${service.details}"></td>
+                <td class="py-3 px-6 text-left" th:text="${service.price}"></td>
+                <td class="py-3 px-6 text-left" th:text="${service.hours}"></td>
+                <td class="py-3 px-6 text-center">
+                    <div class="flex item-center justify-center">
+                        <a href="#" th:href="@{/services/edit/{id}(id=${service.id})}" class="w-4 mr-2 transform hover:text-blue-500 hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                <path fill-rule="evenodd" d="M4 16a2 2 0 002 2h8a2 2 0 002-2v-3H4v3z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" th:href="@{/services/delete/{id}(id=${service.id})}" class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H3a1 1 0 100 2h14a1 1 0 100-2h-2V3a1 1 0 00-1-1H6zm2 5a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
