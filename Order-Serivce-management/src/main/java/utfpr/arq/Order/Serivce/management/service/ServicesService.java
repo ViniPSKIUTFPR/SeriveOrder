@@ -8,7 +8,8 @@ import utfpr.arq.Order.Serivce.management.repository.ServicesRepository;
 
 @Service
 public class ServicesService {
-    
+    //Injeção de dependência para o repositório que será utilizado no serviço
+    //Todas as operações de CRUD são feitas através do repositório
     @Autowired
     private ServicesRepository servicesRepository;
 

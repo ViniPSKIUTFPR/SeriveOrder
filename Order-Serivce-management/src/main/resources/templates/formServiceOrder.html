@@ -1,27 +1,38 @@
 <div th:fragment="content" class="container mx-auto mt-10">
     <div class="bg-white p-8 rounded shadow-md">
         <h1 class="text-2xl font-bold mb-6 text-gray-700">Cadastro de Ordem de Serviço</h1>
-        <form th:action="@{/service-order/save}" method="post" class="space-y-4">
+        <form th:action="@{/service-order/save}" method="post">
+            <!-- Campo para o nome do cliente -->
+            <input type="hidden" id="id" name="id" th:value="${serviceOrder.id}">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="col-span-3">
-                    <label for="clientName" class="block text-sm font-medium text-gray-700">Nome do Cliente</label>
-                    <input type="text" id="clientName" name="clientName" 
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <label for="customerName" class="block text-sm font-medium text-gray-700">Nome do Cliente</label>
+                    <input type="text" id="customerName" name="customerName" 
+                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Nome do Cliente"
+                           th:value="${serviceOrder.customerName}" required>
                 </div>
+                <!-- Campo para o status -->
                 <div class="col-span-1">
-                    <label for="orderStatus" class="block text-sm font-medium text-gray-700">Status</label>
-                    <select id="orderStatus" name="orderStatus" 
-                            class="px-1 py-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                        <option value="pendente">Pendente</option>
-                        <option value="concluida">Concluída</option>
+                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select id="status" name="status" 
+                            class="px-1 py-4 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            required>
+                            <option value="Pendente" th:selected="${serviceOrder.status == 'Pendente'}">Pendente</option>
+                            <option value="Finalizada" th:selected="${serviceOrder.status == 'Finalizada'}">Finalizada</option>
+                        </select>
                     </select>
                 </div>
             </div>
+
+            <!-- Tabela de serviços -->
             <div>
                 <h1 class="text-xl font-bold mb-6 text-gray-700">Serviços</h1>
                 <div class="mb-4">
                     <button 
-                        class="bg-emerald-500 text-white px-4 py-2 rounded-md shadow hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        type="button"
+                        class="bg-emerald-500 text-white px-4 py-2 rounded-md shadow hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        onclick="toggleModal()">
                         Adicionar Serviço
                     </button>
                 </div>
@@ -34,27 +45,33 @@
                             <th class="py-3 px-6 text-center">Ações</th>
                         </tr>
                     </thead>
-                    <tbody class="text-gray-600 text-sm font-light">
-                        <tr th:each="orderServices : ${orderServices}" class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-6 text-left" th:text="${orderServices.id}"></td>
-                            <td class="py-3 px-6 text-left" th:text="${orderServices.name}"></td>
-                            <td class="py-3 px-6 text-left" th:text="${orderServices.price}"></td>
+                    <tbody id="orderServicesTableBody" class="text-gray-600 text-sm font-light">
+                        <tr th:each="service, iterStat : ${serviceOrder.services}" class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left">
+                                <input type="hidden" th:name="'services[' + ${iterStat.index} + '].id'" th:value="${service.id}">
+                                <span th:text="${service.id}"></span>
+                            </td>
+                            <td class="py-3 px-6 text-left">
+                                <input type="hidden" th:name="'services[' + ${iterStat.index} + '].name'" th:value="${service.name}">
+                                <span th:text="${service.name}"></span>
+                            </td>
+                            <td class="py-3 px-6 text-left">
+                                <input type="hidden" th:name="'services[' + ${iterStat.index} + '].price'" th:value="${service.price}">
+                                <span th:text="${service.price}"></span>
+                            </td>
                             <td class="py-3 px-6 text-center">
-                                <div class="flex item-center justify-center">
-                                    <a href="#" th:href="@{/orders/delete/{id}(id=${orderServices.id})}" class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H3a1 1 0 100 2h14a1 1 0 100-2h-2V3a1 1 0 00-1-1H6zm2 5a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
-                                        </svg>
-                                    </a>
-                                </div>
+                                <button type="button" class="w-4 mr-2 transform hover:text-red-500 hover:scale-110" onclick="removeService(this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H3a1 1 0 100 2h14a1 1 0 100-2h-2V3a1 1 0 00-1-1H6zm2 5a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="mt-4">
-                    <span class="text-md">Total: </span> <span th:text="${totalValue}"></span>
-                </div>
             </div>
+
+            <!-- Botão de salvar -->
             <div class="flex justify-end">
                 <button type="submit" 
                         class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -62,5 +79,92 @@
                 </button>
             </div>
         </form>
+         <!-- Modal -->
+         <div id="serviceModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden justify-center items-center">
+            <div class="bg-white w-1/2 rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-700">Selecionar Serviço</h2>
+                    <button type="button" onclick="toggleModal()" class="text-gray-500 hover:text-gray-700">
+                        &times;
+                    </button>
+                </div>
+                <table class="w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                    <thead>
+                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-left">Código</th>
+                            <th class="py-3 px-6 text-left">Descrição</th>
+                            <th class="py-3 px-6 text-left">Valor</th>
+                            <th class="py-3 px-6 text-center">Selecionar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-600 text-sm font-light">
+                        <tr th:each="service : ${services}" class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left" th:text="${service.id}"></td>
+                            <td class="py-3 px-6 text-left" th:text="${service.name}"></td>
+                            <td class="py-3 px-6 text-left" th:text="${service.price}"></td>
+                            <td class="py-3 px-6 text-center">
+                                <button 
+                                    type="button"
+                                    class="bg-blue-500 text-white px-2 py-1 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    th:attr="onclick=|addService('${service.id}', '${service.name}', '${service.price}')|">
+                                    Selecionar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Modal -->
+
+        <script>
+            function toggleModal() {
+                const modal = document.getElementById('serviceModal');
+                modal.classList.toggle('hidden');
+                modal.classList.toggle('flex');
+            }
+
+            function addService(id, name, price) {
+                const orderServicesTable = document.getElementById('orderServicesTableBody');
+                if (!orderServicesTable) {
+                    console.error('Elemento com ID "orderServicesTableBody" não encontrado.');
+                    return;
+                }
+
+                // Obtém o índice da nova linha
+                const rowIndex = orderServicesTable.children.length;
+
+                // Cria uma nova linha na tabela
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td class="py-3 px-6 text-left">
+                        <input type="hidden" name="services[${rowIndex}].id" value="${id}">
+                        ${id}
+                    </td>
+                    <td class="py-3 px-6 text-left">
+                        <input type="hidden" name="services[${rowIndex}].name" value="${name}">
+                        ${name}
+                    </td>
+                    <td class="py-3 px-6 text-left">
+                        <input type="hidden" name="services[${rowIndex}].price" value="${price}">
+                        ${price}
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                        <button class="w-4 mr-2 transform hover:text-red-500 hover:scale-110" onclick="removeService(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H3a1 1 0 100 2h14a1 1 0 100-2h-2V3a1 1 0 00-1-1H6zm2 5a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1zm4 0a1 1 0 011 1v6a1 1 0 11-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </td>
+                `;
+                orderServicesTable.appendChild(newRow);
+                toggleModal();
+            }
+            
+            function removeService(button) {
+                const row = button.closest('tr');
+                row.remove();
+            }
+        </script>
     </div>
 </div>

@@ -23,6 +23,8 @@ public class OrderServicesModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private int sequence;
+
     private int id;
 
     @ManyToOne
