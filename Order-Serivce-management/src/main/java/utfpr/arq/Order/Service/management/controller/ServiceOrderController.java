@@ -1,4 +1,4 @@
-package utfpr.arq.Order.Serivce.management.controller;
+package utfpr.arq.Order.Service.management.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import utfpr.arq.Order.Serivce.management.model.OrderServicesModel;
-import utfpr.arq.Order.Serivce.management.model.ServiceOrderModel;
-import utfpr.arq.Order.Serivce.management.service.OrderService;
-import utfpr.arq.Order.Serivce.management.service.ServicesService;
+import utfpr.arq.Order.Service.management.model.OrderServicesModel;
+import utfpr.arq.Order.Service.management.model.ServiceOrderModel;
+import utfpr.arq.Order.Service.management.service.OrderService;
+import utfpr.arq.Order.Service.management.service.ServicesService;
 
 
 @Controller

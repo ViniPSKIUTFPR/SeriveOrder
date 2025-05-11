@@ -1,12 +1,14 @@
-package utfpr.arq.Order.Serivce.management.service;
+package utfpr.arq.Order.Service.management.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import utfpr.arq.Order.Serivce.management.model.ServiceOrderModel;
-import utfpr.arq.Order.Serivce.management.repository.ServiceOrderRepository;
+import utfpr.arq.Order.Service.management.model.ServiceOrderModel;
+import utfpr.arq.Order.Service.management.repository.ServiceOrderRepository;
 
+@Service
 public class OrderService {
     //Injeção de dependência para o repositório que será utilizado no serviço
     //Todas as operações de CRUD são feitas através do repositório

@@ -1,4 +1,4 @@
-package utfpr.arq.Order.Serivce.management.model;
+package utfpr.arq.Order.Service.management.model;
 
 import java.util.List;
 

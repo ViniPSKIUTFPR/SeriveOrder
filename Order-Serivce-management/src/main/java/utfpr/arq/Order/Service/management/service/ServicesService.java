@@ -1,10 +1,11 @@
-package utfpr.arq.Order.Serivce.management.service;
+package utfpr.arq.Order.Service.management.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utfpr.arq.Order.Serivce.management.model.ServicesModel;
-import utfpr.arq.Order.Serivce.management.repository.ServicesRepository;
+
+import utfpr.arq.Order.Service.management.model.ServicesModel;
+import utfpr.arq.Order.Service.management.repository.ServicesRepository;
 
 @Service
 public class ServicesService {
