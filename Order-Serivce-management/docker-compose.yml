@@ -13,6 +13,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"  
+      - "15672:15672" 
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
   app:
     build:
       context: .
@@ -22,10 +32,30 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orderServiceManagement
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      broker.queue.email.name: default.email
     ports:
       - "8080:8080"
     depends_on:
       - postgres
+      - rabbitmq
+
+  email:
+    build:
+      context: ../email
+      dockerfile: Dockerfile
+    container_name: email_service_app
+    environment:
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      broker.queue.email.name: default.email
+    depends_on:
+      - rabbitmq
 
 volumes:
   postgres_data:

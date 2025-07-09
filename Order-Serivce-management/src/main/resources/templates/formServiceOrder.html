@@ -23,6 +23,13 @@
                         </select>
                     </select>
                 </div>
+                <div class="">
+                    <label for="customerEmail" class="block text-sm font-medium text-gray-700">Email do Cliente</label>
+                    <input type="text" id="customerEmail" name="customerEmail" 
+                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Email do Cliente"
+                            th:value="${serviceOrder.customerEmail}" required>
+                </div>
             </div>
 
             <!-- Tabela de serviços -->

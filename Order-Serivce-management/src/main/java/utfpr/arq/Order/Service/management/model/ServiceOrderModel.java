@@ -28,6 +28,7 @@ public class ServiceOrderModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String customerName;
+    private String customerEmail;
     private String status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
