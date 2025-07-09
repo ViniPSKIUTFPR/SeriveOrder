@@ -18,7 +18,6 @@ public class EmailConsumers {
 
     @RabbitListener(queues = "${broker.queue.email.name}")
     public void listenEmailQueue(@Payload EmailDTO emailDTO){
-        System.out.println("Received: " + emailDTO.emailTo());
         var emailModel = new EmailModel();
         BeanUtils.copyProperties(emailDTO, emailModel);
         emailService.sendEmail(emailModel);
